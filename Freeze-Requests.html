@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 30px;
+            padding: 50px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 20 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(10, 10, 10, 0.3);
+        }
+        #logo {
+            max-width: 100px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }      
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="center">
+            <img id="logo" src="https://i.imgur.com/9mOm7gP.png" alt="Company Logo">
+            <h2>Membership Freeze Request</h2>
+        </div>
+        <form id="freeze-form">
+            <label for="name">Member Name:</label>
+            <input type="text" id="name">
+            <label for="membership">Membership/Package:</label>
+            
+            <select id="membership">
+                <option value="Studio 1 Month Unlimited Membership">Studio 1 Month Unlimited Membership</option>
+                <option value="Studio 3 Month Unlimited Membership">Studio 3 Month Unlimited Membership</option>
+                <option value="Studio Annual Unlimited Membership">Studio Annual Unlimited Membership</option>
+                <option value="Studio 8 Class Package">Studio 8 Class Package</option>
+                <option value="Studio 12 Class Package">Studio 12 Class Package</option>
+                <option value="Studio 6 Month Unlimited Membership">Studio 6 Month Unlimited Membership</option>
+                <option value="Studio 20 Single Class Pack">Studio 20 Single Class Pack</option>
+                <option value="Studio 10 Single Class Pack">Studio 10 Single Class Pack</option>
+                <option value="Studio 30 Single Class Pack">Studio 30 Single Class Pack</option>
+                <option value="Studio 4 Class Package">Studio 4 Class Package</option>
+                <option value="Studio Single class">Studio Single class</option>
+                <option value="Studio Newcomers 2 Week Unlimited Membership">Studio Newcomers 2 Week Unlimited Membership</option>
+                <option value="Studio 2 Week Unlimited Membership">Studio 2 Week Unlimited Membership</option>
+                <option value="Studio Open Barre Class">Studio Open Barre Class</option>
+                <option value="Studio Private Class">Studio Private Class</option>
+                <option value="Studio Complimentary Class">Studio Complimentary Class</option>
+                <option value="Studio Staff/Family Class">Studio Staff/Family Class</option>
+                <option value="Virtual Private Class">Virtual Private Class</option>
+                <option value="Studio Free Influencer Class">Studio Free Influencer Class</option>
+                <option value="Flex 30 Single Classes">Flex 30 Single Classes</option>
+                <option value="Studio FLEX 4 Class">Studio FLEX 4 Class</option>
+                <option value="Studio Happy Hour Private">Studio Happy Hour Private</option>
+                <!-- Add more membership options here -->
+            </select>
+          <label for="reason">Reason for Freeze (optional):</label>
+<input type="text" id="reason">
+
+            <label for="start-date">Start Date:</label>
+            <input type="text" id="start-date">
+            <label for="end-date">End Date:</label>
+            <input type="text" id="end-date">
+            <button type="button" id="generate-link">Send Request</button>
+        </form>
+        <div id="generated-link-container" style="display: none;">
+            <p>Click the button below to open your email client:</p>
+            <a id="generated-link" href=""></a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#start-date, #end-date").datepicker();
+            
+            // Dynamically adjust dropdown width to match text fields
+            var inputWidth = $("input").outerWidth();
+            $("#membership").css("width", inputWidth);
+
+            $("#generate-link").click(function() {
+                var name = $("#name").val();
+                var membership = $("#membership").val();
+              var reason = $("#reason").val();
+                var startDate = $("#start-date").val();
+                var endDate = $("#end-date").val();
+                var emailBody = `
+                    Dear Team,
+                    
+                    I am writing to request a temporary freeze on my ${membership} from ${startDate} to ${endDate} on account of ${reason}.
+
+                    Thank you,
+                    ${name}
+                `;
+
+                emailBody = encodeURIComponent(emailBody);
+                var mailtoLink = `mailto:info@physique57india.com?subject=Membership%20Freeze%20Request%20-%20${name}&body=${emailBody}`;
+                
+                $("#generated-link").attr("href", mailtoLink).text("Open Email Client").show();
+                $("#generated-link-container").show();
+            });
+        });
+    </script>
+</body>
+</html>
